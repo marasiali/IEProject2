@@ -59,6 +59,14 @@ input[type="number"] {
 	text-overflow: ellipsis;
 }
 
+a {
+	text-decoration: none;
+}
+
+.page_numbers {
+	padding: 0px;
+}
+
 .footer {
     display: flex;
     flex-direction: column;

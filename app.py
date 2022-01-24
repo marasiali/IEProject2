@@ -42,14 +42,7 @@ def get_item_score(item):
     score = 0
     if item['google_index'] is not None:
         score += 60 * (1 / (item['google_index'] + 1))
-        print('score 1:', 60 * (1 / (item['google_index'] + 1)))
     if item['yahoo_index'] is not None:
         score += 15 * (1 / (item['yahoo_index'] + 1))
-        print('score 2:', 15 * (1 / (item['yahoo_index'] + 1)))
-
-    print('g_index:', item['google_index'])
-    print('y_index:', item['yahoo_index'])
-    print('score:', score)
-    print('__________________________________________')
     return score
 
