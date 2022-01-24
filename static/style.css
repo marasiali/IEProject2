@@ -39,6 +39,26 @@ input[type="number"] {
 	width: 50%;
 }
 
+.item_container {
+	margin: 8px;
+}
+
+.item {
+	margin: 0px;
+	margin-bottom: 8px;
+}
+
+.default_result {
+	padding-left: 16px;
+}
+
+.item_link {
+	width: 250px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .footer {
     display: flex;
     flex-direction: column;

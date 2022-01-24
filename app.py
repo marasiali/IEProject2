@@ -3,7 +3,7 @@ from flask import Flask
 from flask import render_template
 from flask import make_response
 from flask import request
-
+from scraper import google_search, yahoo_search
 
 app = Flask(__name__)
 
@@ -20,20 +20,34 @@ def search():
     return render_template('index.html', query=query, page=page, results=results)
 
 def get_links(query, page):
-    return [
-        {'link': 'https://jinja.palletsprojects.com/en/3.0.x/templates/', 
-        'caption': 'www.giksy.com/fdsgngkdsbjfbjdssdgdsg', 
-        'title': 'This is our site please visit us!', 
-        'description':"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        }, 
-        {'link': 'https://jinja.palletsprojects.com/en/3.0.x/templates/', 
-        'caption': 'www.giksy.com/fdsgngkdsbjfbjdssdgdsg', 
-        'title': 'This is our site please visit us!', 
-        'description':"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        },
-        {'link': 'https://jinja.palletsprojects.com/en/3.0.x/templates/', 
-        'caption': 'www.giksy.com/fdsgngkdsbjfbjdssdgdsg', 
-        'title': 'This is our site please visit us!', 
-        'description':"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-        }
-    ]
+    google_results = google_search(query, int(page))
+    yahoo_results = yahoo_search(query, int(page))
+    results = {}
+    for i, item in enumerate(google_results):
+        item['google_index'] = i
+        item['yahoo_index'] = None
+        results[item['link']] = item
+    for i, item in enumerate(yahoo_results):
+        if item['link'] in results:
+            results[item['link']]['yahoo_index'] = i
+        else:
+            item['google_index'] = None
+            item['yahoo_index'] = i
+            results[item['link']] = item
+    return sorted(results.values(), key=get_item_score)
+
+def get_item_score(item):
+    score = 0
+    if item['google_index'] is not None:
+        score += 60 * (1 / (item['google_index'] + 1))
+        print('score 1:', 60 * (1 / (item['google_index'] + 1)))
+    if item['yahoo_index'] is not None:
+        score += 15 * (1 / (item['yahoo_index'] + 1))
+        print('score 2:', 15 * (1 / (item['yahoo_index'] + 1)))
+
+    print('g_index:', item['google_index'])
+    print('y_index:', item['yahoo_index'])
+    print('score:', score)
+    print('__________________________________________')
+    return score
+

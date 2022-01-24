@@ -26,7 +26,7 @@ def yahoo_search(text, page=1):
 def google_search(text, page=1):
     first_item_index = (page - 1) * 10 + 1
     response_data = service.cse().list(
-        q='test',
+        q=text,
         cx=GOOGLE_SEARCH_ENGINE_ID,
         start=first_item_index
     ).execute()
@@ -39,5 +39,3 @@ def google_search(text, page=1):
             'desc': item['snippet'],
         })
     return results
-
-print(google_search('car'))

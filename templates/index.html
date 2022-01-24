@@ -26,13 +26,17 @@
         {% if results %}
             <ul class="results">
                 {% for item in results %}
-                    <li><a href="{{ item.link }}">{{ item.caption }}</a></li>
-                    <h3>{{ item.title }}</h3>
-                    <p>{{ item.description }}</p>
+                    <li class="item_container">
+                        <h4 class="item item_link">{{ item.link }}</h4>
+                        <a class="item" href="{{ item.link }}">{{ item.title }}</a>
+                        <p class="item">{{ item.desc }}</p>
+                        <small>google index: {{ item.google_index }}</small>
+                        <small>yahoo index: {{ item.yahoo_index }}</small>
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}
-            <p>
+            <p class="default_result">
                 results will be shown here...!
             </p>
         {% endif %}
