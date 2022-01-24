@@ -5,9 +5,11 @@ from scraper import google_search, yahoo_search
 
 app = Flask(__name__)
 
+
 @app.route('/', methods=['GET'])
 def hello():
     return render_template('index.html', query=None, page=None, results=None)
+
 
 @app.route('/search', methods=['GET'])
 def search():
@@ -16,6 +18,7 @@ def search():
     page = int(args.get('page'))
     results = get_links(query, page)
     return render_template('index.html', query=query, page=page, results=results)
+
 
 def get_links(query, page):
     google_results = google_search(query, page)
