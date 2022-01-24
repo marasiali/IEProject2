@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMA Search Engine!</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+
+    <form class="form" action="/search" method="GET">
+        {% if query %}
+            <input id="query" type="text" value="{{ query }}" name="query">
+            <input id="page-number" type="number" value="{{ page }}" name="page">
+        {% else %}
+            <input id="query" type="text" placeholder="Type here..." name="query">
+            <input id="page-number" type="number" placeholder="page" name="page">
+        {% endif %}
+        <button class="btn" type="submit">
+            Search!
+        </button>
+    </form>
+
+    <main class="main">
+        {% if results %}
+            <ul class="results">
+                {% for item in results %}
+                    <li><a href="{{ item.link }}">{{ item.caption }}</a></li>
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.description }}</p>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>
+                results will be shown here...!
+            </p>
+        {% endif %}
+    </main>
+    
+    <footer class="footer"> 
+        <p>
+            Designed and Implemented by EMA!
+        </p>
+    </footer>
+</body>
+</html>

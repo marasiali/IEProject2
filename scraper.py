@@ -7,7 +7,6 @@ GOOGLE_API_KEY = 'AIzaSyA_BlmjhsPfrQ0d8sT0ZEZxCF4DWY-xzro'
 GOOGLE_SEARCH_ENGINE_ID = 'cc327526371294410'
 service = build("customsearch", "v1", developerKey=GOOGLE_API_KEY)
 
-
 def yahoo_search(text, page=1):
     first_item_index = (page - 1) * 7 + 1
     formatted_text = '+'.join(text.split())
@@ -40,3 +39,5 @@ def google_search(text, page=1):
             'desc': item['snippet'],
         })
     return results
+
+print(google_search('car'))
