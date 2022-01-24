@@ -36,6 +36,6 @@ def google_search(text, page=1):
         results.append({
             'title': item['title'],
             'link': item['link'],
-            'desc': item['snippet'],
+            'desc': item.get('snippet', ''),
         })
     return results
