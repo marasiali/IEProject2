@@ -12,10 +12,8 @@
     <form class="form" action="/search" method="GET">
         {% if query %}
             <input id="query" type="text" value="{{ query }}" name="query">
-            <input id="page-number" type="number" value="{{ page }}" name="page">
         {% else %}
             <input id="query" type="text" placeholder="Type here..." name="query">
-            <input id="page-number" type="number" placeholder="page" name="page">
         {% endif %}
         <button class="btn" type="submit">
             Search!
@@ -43,6 +41,37 @@
     </main>
     
     <footer class="footer"> 
+    <ul>
+        <!-- previous page -->
+    {% if page %}
+        {% if page-1>=1 %}
+        <li style="display:inline">
+            <a href="{{ url_for('search', query=query, page=page-1, results=None) }}">Previous</a>
+        </li>
+        {% endif %}
+        <!-- all page numbers -->
+        {% if page<=6 %}
+            {% for page_num in range(1,11) %}
+
+                    <li style="display:inline">
+                        <a href="{{ url_for('search', query=query, page=page_num, results=None) }}">{{ page_num }}</a>
+                    </li>
+            {% endfor %}
+        {% else %}
+            {% for page_num in range(page-5,page+5) %}
+
+                <li style="display:inline">
+                    <a href="{{ url_for('search', query=query, page=page_num, results=None) }}">{{ page_num }}</a>
+                </li>
+            {% endfor %}
+        {% endif %}
+
+        <!-- next page -->
+        <li style="display:inline">
+            <a href="{{ url_for('search', query=query, page=page+1, results=None) }}">Next</a></li>
+    {% endif %}
+    </ul>
+
         <p>
             Designed and Implemented by EMA!
         </p>
