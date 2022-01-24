@@ -13,13 +13,13 @@ def hello():
 def search():
     args = request.args
     query = args.get('query')
-    page = args.get('page')
+    page = int(args.get('page'))
     results = get_links(query, page)
     return render_template('index.html', query=query, page=page, results=results)
 
 def get_links(query, page):
-    google_results = google_search(query, int(page))
-    yahoo_results = yahoo_search(query, int(page))
+    google_results = google_search(query, page)
+    yahoo_results = yahoo_search(query, page)
     results = {}
     for i, item in enumerate(google_results):
         item['google_index'] = i
@@ -32,7 +32,7 @@ def get_links(query, page):
             item['google_index'] = None
             item['yahoo_index'] = i
             results[item['link']] = item
-    return sorted(results.values(), key=get_item_score)
+    return sorted(results.values(), key=get_item_score, reverse=True)
 
 def get_item_score(item):
     score = 0
