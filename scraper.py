@@ -4,8 +4,10 @@ from googleapiclient.discovery import build
 
 
 GOOGLE_API_KEY = 'AIzaSyA_BlmjhsPfrQ0d8sT0ZEZxCF4DWY-xzro'
+GOOGLE_API_KEY_NEW = 'AIzaSyDy2tcXjneCKQekVsCby6uSedw7BOyFcGA'
 GOOGLE_SEARCH_ENGINE_ID = 'cc327526371294410'
-service = build("customsearch", "v1", developerKey=GOOGLE_API_KEY)
+GOOGLE_SEARCH_ENGINE_ID_NEW = 'b9b1a45eafbc1bc0c'
+service = build("customsearch", "v1", developerKey=GOOGLE_API_KEY_NEW)
 
 def yahoo_search(text, page=1):
     first_item_index = (page - 1) * 7 + 1
@@ -27,7 +29,7 @@ def google_search(text, page=1):
     first_item_index = (page - 1) * 10 + 1
     response_data = service.cse().list(
         q=text,
-        cx=GOOGLE_SEARCH_ENGINE_ID,
+        cx=GOOGLE_SEARCH_ENGINE_ID_NEW,
         start=first_item_index
     ).execute()
 
