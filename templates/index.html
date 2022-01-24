@@ -12,10 +12,8 @@
     <form class="form" action="/search" method="GET">
         {% if query %}
             <input id="query" type="text" value="{{ query }}" name="query">
-            <input id="page-number" type="number" value="{{ page }}" name="page">
         {% else %}
             <input id="query" type="text" placeholder="Type here..." name="query">
-            <input id="page-number" type="number" placeholder="page" name="page">
         {% endif %}
         <button class="btn" type="submit">
             Search!

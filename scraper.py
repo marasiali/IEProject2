@@ -15,10 +15,13 @@ def yahoo_search(text, page=1):
     results = []
     for item in soup.select('.algo'):
         title_box = item.select_one('a.td-hu')
+        desc_box = item.select_one('.fc-falcon')
+        if not desc_box:
+            continue
         results.append({
-            'title': title_box.contents[-1],
+            'title': title_box.contents[-1].get_text(),
             'link': title_box['href'],
-            'desc': item.select_one('.fc-falcon').text
+            'desc': desc_box.text,
         })
     return results
 

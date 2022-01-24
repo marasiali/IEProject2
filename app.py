@@ -15,7 +15,8 @@ def hello():
 def search():
     args = request.args
     query = args.get('query')
-    page = int(args.get('page'))
+    page = int(args.get('page', 1))
+    print(page)
     results = get_links(query, page)
     return render_template('index.html', query=query, page=page, results=results)
 
